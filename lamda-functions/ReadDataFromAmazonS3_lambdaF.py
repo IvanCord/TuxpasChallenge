@@ -32,7 +32,16 @@ def lambda_handler(event, context):
         user="admin",
         password="perrocurry123",
     )
-    mysql_empsql_insert_query = "INSERT INTO courses (id, course) VALUES (%s, %s)"
+
+    tabletype = csv_file.split("/")[-1][:6]
+    mysql_empsql_insert_query = ""
+    if tabletype == "course":
+        mysql_empsql_insert_query = "INSERT INTO courses (id, course) VALUES (%s, %s)"
+    elif tabletype == "career":
+        mysql_empsql_insert_query = "INSERT INTO careers (id, career) VALUES (%s, %s)"
+    elif tabletype == "studen":
+        mysql_empsql_insert_query = "INSERT INTO students (id, name, enrolment, career_id, course_id) VALUES (%s, %s, %s, %s, %s)"
+
     cursor = connection.cursor()
     cursor.executemany(mysql_empsql_insert_query, results)
     connection.commit()
