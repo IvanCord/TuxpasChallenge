@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2023-07-22T19:12:17Z",
+    "version": "2023-07-24T21:25:20Z",
     "title": "MyAPIS3"
   },
   "host": "dd4o1pt6w2.execute-api.us-east-1.amazonaws.com",
@@ -39,6 +39,11 @@
             }
           }
         },
+        "security": [
+          {
+            "api_key": ["6XdknHXP0ixk3auL14Nw8D48sO6gc4r8vxjIM9Nd"]
+          }
+        ],
         "x-amazon-apigateway-integration": {
           "credentials": "arn:aws:iam::946047658269:role/apigw-sample-1",
           "httpMethod": "PUT",
@@ -57,6 +62,13 @@
           "type": "aws"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
     }
   },
   "definitions": {
