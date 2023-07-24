@@ -16,4 +16,4 @@ presenting) solution in an AWS environment using its cloud services.
 
 ## Solution: AWS API Rest Serverless Architecture
 
-![What is this](TuxpasAPIRestArchitecture.png)
+![What is this](TuxpasAPIRestArchitecture.jpeg)
