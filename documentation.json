@@ -1,0 +1,69 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2023-07-22T19:12:17Z",
+    "title": "MyAPIS3"
+  },
+  "host": "dd4o1pt6w2.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/v1",
+  "schemes": ["https"],
+  "paths": {
+    "/{bucket}/{folder}/{filename}": {
+      "put": {
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "bucket",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "folder",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "credentials": "arn:aws:iam::946047658269:role/apigw-sample-1",
+          "httpMethod": "PUT",
+          "uri": "arn:aws:apigateway:us-east-1:s3:path/{bucket}/{folder}/{key}",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.folder": "method.request.path.folder",
+            "integration.request.path.key": "method.request.path.filename",
+            "integration.request.path.bucket": "method.request.path.bucket"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "aws"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    }
+  },
+  "x-amazon-apigateway-binary-media-types": ["*/*"]
+}
