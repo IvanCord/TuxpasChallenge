@@ -15,6 +15,7 @@ def lambda_handler(event, context):
     csv_file_obj = s3_client.get_object(Bucket=bucket, Key=csv_file)
     lines = csv_file_obj["Body"].read().decode("utf-8").split("\n")
     results = []
+    results_not_inserted = []
 
     # Process the data rows using csv.DictReader (header assumed)
     # for row in csv.DictReader(lines):
@@ -22,9 +23,16 @@ def lambda_handler(event, context):
 
     # Process the data rows using csv.reader (no header assumed)
     for row in csv.reader(lines):
-        results.append(row)
+        if all(cell != "" for cell in row) and (
+            row != []
+        ):  # Check if all cells in the row are not empty - data integrity
+            results.append(row)
+        else:
+            results_not_inserted.append(row)
 
-    # print(results)
+    print(
+        "Transactions failing to comply with the rules are ... ", results_not_inserted
+    )  # Load to Amazon CloudWatch
 
     connection = mysql.connector.connect(
         host="tuxpas-database.csmaoylldox7.us-east-1.rds.amazonaws.com",
